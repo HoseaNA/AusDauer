@@ -5,6 +5,8 @@ class ProductDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     const productName = 'Cookies';
     const numOfReviews = 178;
     const price = 2.99;
@@ -39,12 +41,12 @@ class ProductDetail extends StatelessWidget {
           SliverToBoxAdapter(
             child: Container(
               alignment: Alignment.topLeft,
-              padding: const EdgeInsets.all(32),
+              padding: EdgeInsets.all(screenWidth * 0.07),
               color: Colors.white,
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
@@ -87,9 +89,9 @@ class ProductDetail extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 8,
+                    height: screenHeight * 0.003,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
@@ -116,12 +118,12 @@ class ProductDetail extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: screenHeight * 0.03,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Description',
                         style: TextStyle(
                           fontSize: 20,
@@ -129,9 +131,9 @@ class ProductDetail extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 12,
+                        height: screenHeight * 0.02,
                       ),
-                      Text(description,
+                      const Text(description,
                           textAlign: TextAlign.justify,
                           style: TextStyle(
                             fontSize: 14,
@@ -140,7 +142,7 @@ class ProductDetail extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: screenHeight * 0.03,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,19 +150,19 @@ class ProductDetail extends StatelessWidget {
                       Text(
                         'About the Seller',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: screenHeight * 0.03,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: screenHeight * 0.03,
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: SizedBox(
                           child: Column(
                             children: [
-                              Row(
+                              const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
@@ -199,9 +201,9 @@ class ProductDetail extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: 8,
+                                height: screenHeight * 0.01,
                               ),
-                              Text(
+                              const Text(
                                 sellerDetail,
                                 textAlign: TextAlign.justify,
                                 style: TextStyle(
@@ -216,22 +218,22 @@ class ProductDetail extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: screenHeight * 0.03,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Reviews',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 6,
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -269,7 +271,42 @@ class ProductDetail extends StatelessWidget {
                           ReviewBars(),
                         ],
                       ),
+                      const ReviewCards(),
+                      SizedBox(
+                        height: screenHeight * 0.02,
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                        color: const Color.fromARGB(255, 231, 231, 231),
+                        child: ButtonBar(
+                          alignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: ElevatedButton(
+                                onPressed: null,
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                    const Color.fromARGB(255, 231, 231, 231),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'See All Reviews',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.1,
                   ),
                 ],
               ),
@@ -353,10 +390,10 @@ class ReviewBars extends StatelessWidget {
   Widget build(BuildContext context) {
     // get the total number of reviews
     const fives = 10;
-    const fours = 5;
-    const threes = 3;
-    const twos = 2;
-    const ones = 1;
+    const fours = 0;
+    const threes = 0;
+    const twos = 0;
+    const ones = 0;
     const total = fives + fours + threes + twos + ones;
 
     return const SizedBox(
@@ -475,6 +512,124 @@ class ReviewBars extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class ReviewCards extends StatelessWidget {
+  final int limit;
+  final int offset;
+
+  const ReviewCards({super.key, this.limit = 5, this.offset = 0});
+
+  @override
+  Widget build(BuildContext context) {
+    // get reviews from API
+    List reviews = [
+      {
+        'image': 'assets/images/placeholder.png',
+        'name': 'Rita Arnold',
+        'rating': 5.0,
+        'numOfUserReviews': 234,
+        'review':
+            'Amazing. The seller was very friendly. The cookies were amazing. etc etc etc',
+      },
+      {
+        'image': 'assets/images/placeholder.png',
+        'name': 'Rita Arnold',
+        'rating': 5.0,
+        'numOfUserReviews': 234,
+        'review':
+            'Amazing. The seller was very friendly. The cookies were amazing. etc etc etc',
+      },
+      {
+        'image': 'assets/images/placeholder.png',
+        'name': 'Rita Arnold',
+        'rating': 5.0,
+        'numOfUserReviews': 234,
+        'review':
+            'Amazing. The seller was very friendly. The cookies were amazing. etc etc etc',
+      },
+      {
+        'image': 'assets/images/placeholder.png',
+        'name': 'Rita Arnold',
+        'rating': 5.0,
+        'numOfUserReviews': 234,
+        'review':
+            'Amazing. The seller was very friendly. The cookies were amazing. etc etc etc',
+      },
+    ];
+
+    List<Widget> reviewCards = [];
+
+    for (var element in reviews) {
+      reviewCards.add(Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CircleAvatar(
+                        radius: 25,
+                        backgroundImage: AssetImage(element['image'] as String),
+                      ),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            element['name'] as String,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '${element['numOfUserReviews']} reviews',
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  StarRating(
+                    rating: element['rating'] as double,
+                    size: 20,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                element['review'] as String,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ));
+    }
+
+    return Column(
+      children: reviewCards,
     );
   }
 }
