@@ -157,61 +157,71 @@ class ProductDetail extends StatelessWidget {
                       SizedBox(
                         height: screenHeight * 0.03,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: SizedBox(
-                          child: Column(
-                            children: [
-                              const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: AssetImage(
-                                        'assets/images/placeholder.png'),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        sellerName,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: const Color(0xFFDBFFDA),
+                          border: Border.all(
+                            color: Color.fromARGB(252, 31, 160, 3),
+                            width: 1,
+                          )
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: SizedBox(
+                            child: Column(
+                              children: [
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/placeholder.png'),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          sellerName,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        sellerLocation,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey,
+                                        Text(
+                                          sellerLocation,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        'Member since $year',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: screenHeight * 0.01,
-                              ),
-                              const Text(
-                                sellerDetail,
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
+                                        Text(
+                                          'Member since $year',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: screenHeight * 0.01,
+                                ),
+                                const Text(
+                                  sellerDetail,
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
