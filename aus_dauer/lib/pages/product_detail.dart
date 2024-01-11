@@ -33,7 +33,7 @@ class ProductDetail extends StatelessWidget {
             expandedHeight: 260,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                'assets/icons/cookies.png',
+                'assets/images/cookies.png',
                 fit: BoxFit.cover,
               ),
             ),
@@ -162,7 +162,7 @@ class ProductDetail extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           color: const Color(0xFFDBFFDA),
                           border: Border.all(
-                            color: Color.fromARGB(252, 31, 160, 3),
+                            color: const Color.fromARGB(252, 31, 160, 3),
                             width: 1,
                           )
                         ),
