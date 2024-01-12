@@ -4,7 +4,7 @@
 
 Dipersembahkan oleh: MalamPagi
 
-sebagai realisasi project untuk IFEST UNPAD 2023.
+sebagai realisasi project untuk Hackfest 2023.
 
 Anggota:
 
