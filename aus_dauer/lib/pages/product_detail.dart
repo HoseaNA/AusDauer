@@ -1,30 +1,89 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ProductDetail extends StatelessWidget {
-  const ProductDetail({super.key});
+class ProductDetail extends StatefulWidget {
+  final String productId;
+
+  const ProductDetail({super.key, required this.productId});
+
+  @override
+  State<ProductDetail> createState() => _ProductDetailState();
+}
+
+class _ProductDetailState extends State<ProductDetail> {
+  final CollectionReference productsCollection =
+      FirebaseFirestore.instance.collection('products');
+
+  final CollectionReference sellersCollection =
+      FirebaseFirestore.instance.collection('seller');
+
+  String imgUrl = '';
+  String productName = '';
+  double numOfReviews = 0.0;
+  double price = 0.0;
+  double rating = 0.0;
+  double stock = 0.0;
+  String description = '';
+  String sellerId = '';
+  String sellerName = '';
+  String sellerLocation = '';
+  double year = 0.0;
+  String sellerDetail = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    String productId = widget.productId;
+
+    try {
+      DocumentSnapshot<Map<String, dynamic>> productSnapshot =
+          await productsCollection.doc(productId).get()
+              as DocumentSnapshot<Map<String, dynamic>>;
+
+      Map<String, dynamic>? productData = productSnapshot.data();
+
+      if (productData != null) {
+        setState(() {
+          imgUrl = productData['image'] ?? '';
+          productName = productData['name'] ?? '';
+          numOfReviews = productData['reviews'] ?? 0;
+          price = (productData['price'] ?? 0.0).toDouble();
+          rating = (productData['rating'] ?? 0.0).toDouble();
+          stock = productData['stock'] ?? 0;
+          description = productData['description'] ?? '';
+          sellerId = productData['sellerID'] ?? '';
+        });
+
+        DocumentSnapshot<Map<String, dynamic>> sellerDoc =
+            await sellersCollection.doc(sellerId).get()
+                as DocumentSnapshot<Map<String, dynamic>>;
+
+        Map<String, dynamic>? sellerData = sellerDoc.data();
+
+        if (sellerData != null) {
+          setState(() {
+            sellerName = sellerData['name'] ?? '';
+            sellerLocation = sellerData['location'] ?? '';
+            year = (sellerData['since'] ?? 0.0).toDouble();
+            sellerDetail = sellerData['description'] ?? '';
+          });
+        }
+      }
+    } catch (e) {
+      // Handle the error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    const productName = 'Cookies';
-    const numOfReviews = 178;
-    const price = 2.99;
-    const rating = 3.2;
-    const stock = 300;
-    const description =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-    const sellerName = 'Anna Marshall';
-    const sellerLocation = 'Bandung Indonesia';
-    const year = 2018;
-    const sellerDetail =
-        'Anna Marshall is a resilient and determined woman who moved to Indonesia from India seven years ago. Born in Massachusets, Anna was diagnosed with a mobility impairment due to a spinal injury from a car accident in her early twenties. Despite the challenges, she pursued her education in culinary arts and had always been passionate about exploring different cultures cuisine.';
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 5,
-      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -33,8 +92,8 @@ class ProductDetail extends StatelessWidget {
             expandedHeight: 260,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                'assets/icons/cookies.png',
-                fit: BoxFit.cover,
+                'assets/images/cookies.png',
+                fit: BoxFit.fitWidth,
               ),
             ),
           ),
@@ -46,21 +105,22 @@ class ProductDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             productName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
                             '$numOfReviews reviews',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
                             ),
@@ -71,12 +131,12 @@ class ProductDetail extends StatelessWidget {
                         children: [
                           Text(
                             '\$$price',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
+                          const Text(
                             '/pc',
                             style: TextStyle(
                               fontSize: 14,
@@ -91,7 +151,7 @@ class ProductDetail extends StatelessWidget {
                   SizedBox(
                     height: screenHeight * 0.003,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
@@ -100,8 +160,8 @@ class ProductDetail extends StatelessWidget {
                             rating: rating,
                           ),
                           Text(
-                            '($rating)',
-                            style: TextStyle(
+                            '(${rating.toInt()})',
+                            style: const TextStyle(
                               fontSize: 13,
                               color: Colors.grey,
                             ),
@@ -110,7 +170,7 @@ class ProductDetail extends StatelessWidget {
                       ),
                       Text(
                         'Stock: $stock',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           color: Colors.grey,
                         ),
@@ -133,12 +193,14 @@ class ProductDetail extends StatelessWidget {
                       SizedBox(
                         height: screenHeight * 0.02,
                       ),
-                      const Text(description,
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
-                          )),
+                      Text(
+                        description,
+                        textAlign: TextAlign.justify,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -159,23 +221,22 @@ class ProductDetail extends StatelessWidget {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: const Color(0xFFDBFFDA),
-                          border: Border.all(
-                            color: Color.fromARGB(252, 31, 160, 3),
-                            width: 1,
-                          )
-                        ),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color(0xFFDBFFDA),
+                            border: Border.all(
+                              color: const Color.fromARGB(252, 31, 160, 3),
+                              width: 1,
+                            )),
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: SizedBox(
                             child: Column(
                               children: [
-                                const Row(
+                                Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
-                                    CircleAvatar(
+                                    const CircleAvatar(
                                       radius: 50,
                                       backgroundImage: AssetImage(
                                           'assets/images/placeholder.png'),
@@ -186,21 +247,21 @@ class ProductDetail extends StatelessWidget {
                                       children: [
                                         Text(
                                           sellerName,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
                                           sellerLocation,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey,
                                           ),
                                         ),
                                         Text(
                                           'Member since $year',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.grey,
                                           ),
@@ -212,10 +273,10 @@ class ProductDetail extends StatelessWidget {
                                 SizedBox(
                                   height: screenHeight * 0.01,
                                 ),
-                                const Text(
+                                Text(
                                   sellerDetail,
                                   textAlign: TextAlign.justify,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),
@@ -243,19 +304,19 @@ class ProductDetail extends StatelessWidget {
                       const SizedBox(
                         height: 6,
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: Column(
                                   children: [
                                     Text(
                                       '$rating stars',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 20,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -267,7 +328,7 @@ class ProductDetail extends StatelessWidget {
                                     ),
                                     Text(
                                       '$numOfReviews reviews',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
@@ -278,7 +339,7 @@ class ProductDetail extends StatelessWidget {
                               ),
                             ],
                           ),
-                          ReviewBars(),
+                          const ReviewBars(),
                         ],
                       ),
                       const ReviewCards(),
