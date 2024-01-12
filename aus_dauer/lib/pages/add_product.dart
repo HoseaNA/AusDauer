@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -308,27 +309,39 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // await addProduct(
-                      //     context,
-                      //     _name!,
-                      //     _price!,
-                      //     _stock!,
-                      //     _description!,
-                      //     _picture!,
-                      // );
-                      _nameController.clear();
-                      _priceController.clear();
-                      _stockController.clear();
-                      _descriptionController.clear();
-                      _pictureController.clear();
-                      final successBar = SnackBar(
-                        content: const Text("Product berhasil disimpan!"),
-                        action: SnackBarAction(
-                          label: 'Hide',
-                          onPressed: () {},
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(successBar);
+                      CollectionReference products =
+                          FirebaseFirestore.instance.collection('products');
+
+                      try {
+                        await products.add({
+                          'name': _name,
+                          'price': _price,
+                          'stock': _stock,
+                          'description': _description,
+                          'image': _picture,
+                          'seller': '56NXH5Jrej7i4p0CjxyY',
+                          'sold': 0,
+                          'reviews': 0,
+                          'rating': 0.0,
+                        });
+
+                        _nameController.clear();
+                        _priceController.clear();
+                        _stockController.clear();
+                        _descriptionController.clear();
+                        _pictureController.clear();
+                        final successBar = SnackBar(
+                          content: const Text("Product berhasil disimpan!"),
+                          action: SnackBarAction(
+                            label: 'Hide',
+                            onPressed: () {},
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(successBar);
+                        Navigator.pop(context);
+                      } catch (e) {
+                        print('Error adding product to Firestore: $e');
+                      }
                     }
                   },
                   child: Text(
