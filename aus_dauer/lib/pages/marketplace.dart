@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import '../manage_product/add_product.dart';
-import '../manage_product/manage_product.dart';
+import './add_product.dart';
+import './manage_product.dart';
 
 class MarketplacePage extends StatefulWidget {
   const MarketplacePage({Key? key}) : super(key: key);
@@ -299,7 +299,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                             child: Column(
                               children: [
                                 Image.asset(
-                                  'lib/assets/cookie.png',
+                                  'assets/images/cookie.png',
                                   width:
                                       MediaQuery.of(context).size.width / 2.5,
                                 ),
@@ -359,7 +359,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Image.asset(
-                    'lib/assets/discover_product.png',
+                    'assets/images/discover_product.png',
                     width: MediaQuery.of(context).size.width,
                   ),
                 ),
@@ -393,7 +393,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                             child: Column(
                               children: [
                                 Image.asset(
-                                  'lib/assets/cookie.png',
+                                  'assets/images/cookie.png',
                                   width:
                                       MediaQuery.of(context).size.width / 2.5,
                                 ),
@@ -493,7 +493,7 @@ class NavigationDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Image.asset(
-                        'lib/assets/discover.png',
+                        'assets/icons/discover.png',
                         width: MediaQuery.of(context).size.width / 11,
                       ),
                       title: const Text("Discover"),
@@ -501,7 +501,7 @@ class NavigationDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Image.asset(
-                        'lib/assets/history.png',
+                        'assets/icons/history.png',
                         width: MediaQuery.of(context).size.width / 11,
                       ),
                       title: const Text("History"),
@@ -509,7 +509,7 @@ class NavigationDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Image.asset(
-                        'lib/assets/chat.png',
+                        'assets/icons/chat.png',
                         width: MediaQuery.of(context).size.width / 11,
                       ),
                       title: const Text("Chats"),
@@ -517,7 +517,7 @@ class NavigationDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Image.asset(
-                        'lib/assets/products.png',
+                        'assets/icons/products.png',
                         width: MediaQuery.of(context).size.width / 11,
                       ),
                       title: const Text("Your Products"),
@@ -532,7 +532,7 @@ class NavigationDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Image.asset(
-                        'lib/assets/clipboard.png',
+                        'assets/icons/clipboard.png',
                         width: MediaQuery.of(context).size.width / 11,
                       ),
                       title: const Text("Orders"),

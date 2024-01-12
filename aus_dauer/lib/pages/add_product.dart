@@ -35,7 +35,7 @@ class _AddProductPageState extends State<AddProductPage> {
               Navigator.pop(context);
             },
             icon: Image.asset(
-              'lib/assets/arrow_back.png',
+              'assets/icons/arrow_back.png',
               width: MediaQuery.of(context).size.width / 11,
             ),
           ),

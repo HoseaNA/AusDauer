@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import './add_product.dart';
-import '../marketplace/marketplace.dart';
+import './marketplace.dart';
 
 class ManageProductPage extends StatefulWidget {
   const ManageProductPage({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class _ManageProductPageState extends State<ManageProductPage> {
                 Navigator.pop(context);
               },
               icon: Image.asset(
-                'lib/assets/clipboard.png',
+                'assets/icons/clipboard.png',
                 width: MediaQuery.of(context).size.width / 11,
               ),
             ),
@@ -232,7 +232,7 @@ class _ManageProductPageState extends State<ManageProductPage> {
                               );
                             },
                             child: Image.asset(
-                              'lib/assets/add_product.png',
+                              'assets/icons/add_product.png',
                               width: MediaQuery.of(context).size.width / 11,
                             ),
                           ),
@@ -267,7 +267,7 @@ class _ManageProductPageState extends State<ManageProductPage> {
                                   width: MediaQuery.of(context).size.width,
                                   height: 100,
                                   child: Image.asset(
-                                    'lib/assets/cookie.png',
+                                    'assets/images/cookie.png',
                                     width:
                                         MediaQuery.of(context).size.width / 2,
                                     fit: BoxFit.cover,
@@ -355,7 +355,7 @@ class NavigationDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Image.asset(
-                      'lib/assets/discover.png',
+                      'assets/icons/discover.png',
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("Discover"),
@@ -363,7 +363,7 @@ class NavigationDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Image.asset(
-                      'lib/assets/history.png',
+                      'assets/icons/history.png',
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("History"),
@@ -371,7 +371,7 @@ class NavigationDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Image.asset(
-                      'lib/assets/chat.png',
+                      'assets/icons/chat.png',
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("Chats"),
@@ -379,7 +379,7 @@ class NavigationDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Image.asset(
-                      'lib/assets/products.png',
+                      'assets/icons/products.png',
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("Your Products"),
@@ -394,7 +394,7 @@ class NavigationDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: Image.asset(
-                      'lib/assets/clipboard.png',
+                      'assets/icons/clipboard.png',
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("Orders"),
