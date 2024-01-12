@@ -26,6 +26,10 @@ Misi Ausdauer adalah menciptakan ruang inklusif dan memberdayakan di mana indivi
 2. **Freelance**: Platform freelance dalam Ausdauer memfasilitasi pemasangan pekerjaan dan kolaborasi. Pengguna dapat menawarkan keterampilan dan keahlian mereka, menyediakan platform bagi pekerja lepas dengan disabilitas untuk menemukan peluang pekerjaan yang bermakna dan fleksibel.
 3. **Story Sharing**: Ausdauer melampaui sekadar menjadi marketplace; ini adalah platform yang didorong oleh komunitas yang mendorong pengguna untuk berbagi kisah pribadi dan perjalanan mereka. Fitur ini bertujuan untuk menginspirasi dan menghubungkan individu dengan disabilitas, memupuk rasa persatuan dan pengertian.
 
+## How to Run
+1. Cara menjalankan aplikasi dapat dilakukan dengan masuk pada direktori "aus_dauer" dengan perintah `cd aus_dauer`.
+2. Kemudian lakukan ``flutter run`` untuk memulai aplikasi.
+
 ## App Preview
 <img src="/screenshots/marketplace.png" alt="MarketPlace" width="250" style="border: 1px solid black;">
 <img src="/screenshots/product_detail.png" alt="MarketPlace" width="250" style="border: 1px solid black;">
