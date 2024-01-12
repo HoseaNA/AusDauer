@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import './add_product.dart';
+
 class ManageProductPage extends StatefulWidget {
   const ManageProductPage({Key? key}) : super(key: key);
 
@@ -28,13 +30,15 @@ class _ManageProductPageState extends State<ManageProductPage> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(""),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.menu,
-              size: 30,
+          leading: Builder(
+            builder: (context) => IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer(); // Open the drawer
+              },
+              icon: const Icon(
+                Icons.menu,
+                size: 30,
+              ),
             ),
           ),
           actions: [
@@ -56,6 +60,7 @@ class _ManageProductPageState extends State<ManageProductPage> {
             ),
           ),
         ),
+        drawer: const NavigationDrawer(),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
@@ -77,13 +82,20 @@ class _ManageProductPageState extends State<ManageProductPage> {
                             fontSize: 20.0,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Image.asset(
-                            'lib/assets/add_product.png',
-                            width: MediaQuery.of(context).size.width / 11,
+                        Builder(
+                          builder: (context) => InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const AddProductPage(),
+                                ),
+                              );
+                            },
+                            child: Image.asset(
+                              'lib/assets/add_product.png',
+                              width: MediaQuery.of(context).size.width / 11,
+                            ),
                           ),
                         ),
                       ],
@@ -167,4 +179,92 @@ class _ManageProductPageState extends State<ManageProductPage> {
       ),
     );
   }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Drawer(
+          child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(24),
+              child: Wrap(
+                runSpacing: 16,
+                children: [
+                  ListTile(
+                    title: const Text(
+                      "ausdauer",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.purple,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 30.0,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ManageProductPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      'lib/assets/discover.png',
+                      width: MediaQuery.of(context).size.width / 11,
+                    ),
+                    title: const Text("Discover"),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      'lib/assets/history.png',
+                      width: MediaQuery.of(context).size.width / 11,
+                    ),
+                    title: const Text("History"),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      'lib/assets/chat.png',
+                      width: MediaQuery.of(context).size.width / 11,
+                    ),
+                    title: const Text("Chats"),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      'lib/assets/products.png',
+                      width: MediaQuery.of(context).size.width / 11,
+                    ),
+                    title: const Text("Your Products"),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ManageProductPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      'lib/assets/clipboard.png',
+                      width: MediaQuery.of(context).size.width / 11,
+                    ),
+                    title: const Text("Orders"),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ));
 }

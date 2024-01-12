@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import './manage_product.dart';
+
 class AddProductPage extends StatefulWidget {
   const AddProductPage({Key? key}) : super(key: key);
 

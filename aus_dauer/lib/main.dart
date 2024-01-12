@@ -5,5 +5,22 @@ import 'package:aus_dauer/app/manage_product/manage_product.dart';
 import 'package:aus_dauer/app/manage_product/add_product.dart';
 
 void main() {
-  runApp(const AddProductPage());
+  runApp(const ManageProductPage());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "flut",
+      theme: ThemeData(
+        primaryColor: Colors.white,
+        fontFamily: 'Inter',
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const ManageProductPage(),
+    );
+  }
 }
