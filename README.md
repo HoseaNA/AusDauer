@@ -8,10 +8,10 @@ sebagai realisasi project untuk Hackfest 2023.
 
 Anggota:
 
-- Hosea Nathanael Abetnego
-- Chesta Adabi Danizwara
-- Nicholas
-- Iskandar Muda Rizky Parlambang
+- Hosea Nathanael Abetnego - Hacker
+- Chesta Adabi Danizwara - Hustler
+- Nicholas - Hipster
+- Iskandar Muda Rizky Parlambang - Hacker
 
 # Application Overview
 
@@ -25,3 +25,10 @@ Misi Ausdauer adalah menciptakan ruang inklusif dan memberdayakan di mana indivi
 1. **Marketplace**: Ausdauer menyediakan marketplace khusus untuk pengguna memamerkan dan menawarkan layanan serta produk mereka. Mulai dari layanan berkompetensi hingga produk kerajinan tangan, pasar ini berfungsi sebagai pusat untuk menghubungkan penjual dengan pelanggan potensial.
 2. **Freelance**: Platform freelance dalam Ausdauer memfasilitasi pemasangan pekerjaan dan kolaborasi. Pengguna dapat menawarkan keterampilan dan keahlian mereka, menyediakan platform bagi pekerja lepas dengan disabilitas untuk menemukan peluang pekerjaan yang bermakna dan fleksibel.
 3. **Story Sharing**: Ausdauer melampaui sekadar menjadi marketplace; ini adalah platform yang didorong oleh komunitas yang mendorong pengguna untuk berbagi kisah pribadi dan perjalanan mereka. Fitur ini bertujuan untuk menginspirasi dan menghubungkan individu dengan disabilitas, memupuk rasa persatuan dan pengertian.
+
+## App Preview
+<img src="/screenshots/marketplace.png" alt="MarketPlace" width="250" style="border: 1px solid black;">
+<img src="/screenshots/product_detail.png" alt="MarketPlace" width="250" style="border: 1px solid black;">
+<img src="/screenshots/sidebar.png" alt="MarketPlace" width="250" style="border: 1px solid black;">
+<img src="/screenshots/manage_products.png" alt="MarketPlace" width="250" style="border: 1px solid black;">
+<img src="/screenshots/add_product.png" alt="MarketPlace" width="250" style="border: 1px solid black;">
