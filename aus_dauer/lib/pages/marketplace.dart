@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/product_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -83,7 +84,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
           sellerId: sellerId,
           numberOfItemsSold: productData['sold'],
           stock: productData['stock'],
-          imagePath: imageUrl, // Use the image URL
+          imagePath: imageUrl,
           sellerName: sellerData['name'] ?? 'Unknown Seller',
         );
 
@@ -212,67 +213,79 @@ class _MarketplacePageState extends State<MarketplacePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
                       children: products.map((data) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductDetail(
+                                    productId: '4gUCNhdHELl1lWcA8usm'),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.grey.withOpacity(0.2)),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                Image(
-                                  image: NetworkImage(data.imagePath),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                ),
-                                const SizedBox(height: 10.0),
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data.name,
-                                            textAlign: TextAlign.start,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 18.0,
-                                            ),
-                                          ),
-                                          Text(
-                                            data.sellerName,
-                                            textAlign: TextAlign.start,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14.0,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Text(
-                                        "\$${data.price}",
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18.0,
-                                        ),
-                                      )
-                                    ],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  Image(
+                                    image: NetworkImage(data.imagePath),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
                                   ),
-                                )
-                              ],
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              data.sellerName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          "\$${data.price}",
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -307,67 +320,79 @@ class _MarketplacePageState extends State<MarketplacePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
                       children: products.map((data) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductDetail(
+                                    productId: '4gUCNhdHELl1lWcA8usm'),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.grey.withOpacity(0.2)),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                Image(
-                                  image: NetworkImage(data.imagePath),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                ),
-                                const SizedBox(height: 10.0),
-                                Container(
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 10.0),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data.name,
-                                            textAlign: TextAlign.start,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 18.0,
-                                            ),
-                                          ),
-                                          Text(
-                                            data.sellerName,
-                                            textAlign: TextAlign.start,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14.0,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Text(
-                                        "\$${data.price}",
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18.0,
-                                        ),
-                                      )
-                                    ],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  Image(
+                                    image: NetworkImage(data.imagePath),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
                                   ),
-                                )
-                              ],
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              data.sellerName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          "\$${data.price}",
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );
