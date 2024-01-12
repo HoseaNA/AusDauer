@@ -263,6 +263,25 @@ class _AddProductPageState extends State<AddProductPage> {
                     ),
                   ),
                   SizedBox(height: 15.0),
+                  Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Image',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 60)
                 ],
               ),
             ),
