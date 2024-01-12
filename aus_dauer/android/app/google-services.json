@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "84732451265",
+    "firebase_url": "https://malampagi-be-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "malampagi-be",
+    "storage_bucket": "malampagi-be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84732451265:android:99ae53e579cf7bef627740",
+        "android_client_info": {
+          "package_name": "com.example.aus_dauer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84732451265-2rubgg0r8seh7unr591f0rlga8dmf0mi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmTPvEpzjsPG-78ZQnL46bEglxT6Dg_H0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84732451265-2rubgg0r8seh7unr591f0rlga8dmf0mi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

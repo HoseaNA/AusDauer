@@ -1,6 +1,8 @@
-import 'package:flutter/gestures.dart';
+import 'package:aus_dauer/pages/product_detail.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import './add_product.dart';
 import './manage_product.dart';
 
@@ -11,17 +13,98 @@ class MarketplacePage extends StatefulWidget {
   State<MarketplacePage> createState() => _MarketplacePageState();
 }
 
+class Product {
+  final String name;
+  final String description;
+  final int numberOfReviews;
+  final double price;
+  final double rating;
+  final String sellerId;
+  final int numberOfItemsSold;
+  final int stock;
+  final String imagePath;
+  String sellerName;
+
+  Product({
+    required this.name,
+    required this.description,
+    required this.numberOfReviews,
+    required this.price,
+    required this.rating,
+    required this.sellerId,
+    required this.numberOfItemsSold,
+    required this.stock,
+    required this.imagePath,
+    required this.sellerName,
+  });
+}
+
 class _MarketplacePageState extends State<MarketplacePage> {
   // ... other methods and variables
   List<Map<String, dynamic>> searched = [];
+
+  final CollectionReference productsCollection =
+      FirebaseFirestore.instance.collection('products');
+
+  final CollectionReference sellersCollection =
+      FirebaseFirestore.instance.collection('seller');
+
+  List<Product> products = [];
+
   @override
   void initState() {
-    // TODO: implement initState
-    // searched = allsearched;
-    // semuanya searched
-    {
-      super.initState();
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> productsSnapshot =
+          await productsCollection.get() as QuerySnapshot<Map<String, dynamic>>;
+
+      List<Product> productList = [];
+
+      for (QueryDocumentSnapshot<Map<String, dynamic>> productDoc
+          in productsSnapshot.docs) {
+        Map<String, dynamic> productData = productDoc.data();
+        String sellerId = productData['sellerID'];
+
+        // Fetch additional seller information
+        DocumentSnapshot<Map<String, dynamic>> sellerDoc =
+            await sellersCollection.doc(sellerId).get()
+                as DocumentSnapshot<Map<String, dynamic>>;
+        Map<String, dynamic> sellerData = sellerDoc.data() ?? {};
+
+        // Load image URL from Firebase Storage
+        String imageUrl = await getImageUrl(productData['image']);
+
+        Product product = Product(
+          name: productData['name'],
+          description: productData['description'],
+          numberOfReviews: productData['reviews'],
+          price: productData['price'].toDouble(),
+          rating: productData['rating'].toDouble(),
+          sellerId: sellerId,
+          numberOfItemsSold: productData['sold'],
+          stock: productData['stock'],
+          imagePath: imageUrl,
+          sellerName: sellerData['name'] ?? 'Unknown Seller',
+        );
+
+        productList.add(product);
+      }
+
+      setState(() {
+        products = productList;
+      });
+    } catch (e) {
+      // Handle error
     }
+  }
+
+  Future<String> getImageUrl(String imagePath) async {
+    Reference ref = FirebaseStorage.instance.ref().child(imagePath);
+    return await ref.getDownloadURL();
   }
 
   void _runFilter(String enteredKeyword) {
@@ -39,23 +122,8 @@ class _MarketplacePageState extends State<MarketplacePage> {
   //   allsearched = results;
   // });
 
-  final List<Map> fyp = [
-    {"nama": "Cookies", "seller": "Budi", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Bondan", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Sutrisno", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Suyatna", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Blacky", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Budi", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Bondan", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Sutrisno", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Suyatna", "image": "cookie", "harga": 5000},
-    {"nama": "Cookies", "seller": "Blacky", "image": "cookie", "harga": 5000},
-  ];
-
   @override
   Widget build(BuildContext context) {
-    List<int> totalPriceList = [];
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -281,73 +349,86 @@ class _MarketplacePageState extends State<MarketplacePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
-                      children: fyp.map((data) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
+                      children: products.map((data) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductDetail(
+                                    productId: '4gUCNhdHELl1lWcA8usm'),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.grey.withOpacity(0.2)),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/images/cookie.png',
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                ),
-                                SizedBox(height: 10.0),
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${data['nama']}",
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 18.0,
-                                            ),
-                                          ),
-                                          Text(
-                                            "${data['seller']}",
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14.0,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Text(
-                                        "\$${data['harga']}",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18.0,
-                                        ),
-                                      )
-                                    ],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  Image(
+                                    image: NetworkImage(data.imagePath),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
                                   ),
-                                )
-                              ],
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              data.sellerName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          "\$${data.price}",
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -375,73 +456,86 @@ class _MarketplacePageState extends State<MarketplacePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
-                      children: fyp.map((data) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
+                      children: products.map((data) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductDetail(
+                                    productId: '4gUCNhdHELl1lWcA8usm'),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
                               border: Border.all(
                                   color: Colors.grey.withOpacity(0.2)),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'assets/images/cookie.png',
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                ),
-                                SizedBox(height: 10.0),
-                                Container(
-                                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                                  width:
-                                      MediaQuery.of(context).size.width / 2.5,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${data['nama']}",
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 18.0,
-                                            ),
-                                          ),
-                                          Text(
-                                            "${data['seller']}",
-                                            textAlign: TextAlign.start,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14.0,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Text(
-                                        "\$${data['harga']}",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18.0,
-                                        ),
-                                      )
-                                    ],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  Image(
+                                    image: NetworkImage(data.imagePath),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
                                   ),
-                                )
-                              ],
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              data.sellerName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          "\$${data.price}",
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18.0,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );
