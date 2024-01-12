@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import './add_product.dart';
+import '../marketplace/marketplace.dart';
 
 class ManageProductPage extends StatefulWidget {
   const ManageProductPage({Key? key}) : super(key: key);
@@ -61,6 +62,144 @@ class _ManageProductPageState extends State<ManageProductPage> {
           ),
         ),
         drawer: const NavigationDrawer(),
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            indicatorColor: Colors.blue.shade100,
+            labelTextStyle: MaterialStateProperty.all(
+              TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            ),
+          ),
+          child: NavigationBar(
+            height: 60,
+            selectedIndex: 0,
+            destinations: [
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.home_outlined,
+                        size: 30,
+                        color: Color(0xFF9F948B),
+                      ),
+                      Text(
+                        "Home",
+                        style: TextStyle(
+                          color: Color(0xFF9F948B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageProductPage(),
+                    ),
+                  );
+                },
+              ),
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.shopping_cart_outlined,
+                        size: 30,
+                        color: Color(0xFF607274),
+                      ),
+                      Text(
+                        "Marketplace",
+                        style: TextStyle(
+                          color: Color(0xFF607274),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MarketplacePage(),
+                    ),
+                  );
+                },
+              ),
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.work_outline_outlined,
+                        size: 30,
+                        color: Color(0xFF9F948B),
+                      ),
+                      Text(
+                        "Freelance",
+                        style: TextStyle(
+                          color: Color(0xFF9F948B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageProductPage(),
+                    ),
+                  );
+                },
+              ),
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person_2_outlined,
+                        size: 30,
+                        color: Color(0xFF9F948B),
+                      ),
+                      Text(
+                        "Profile",
+                        style: TextStyle(
+                          color: Color(0xFF9F948B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageProductPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
@@ -209,7 +348,7 @@ class NavigationDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ManageProductPage(),
+                          builder: (context) => const MarketplacePage(),
                         ),
                       );
                     },

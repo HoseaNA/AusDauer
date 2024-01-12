@@ -5,7 +5,7 @@ import 'package:aus_dauer/app/manage_product/manage_product.dart';
 import 'package:aus_dauer/app/manage_product/add_product.dart';
 
 void main() {
-  runApp(const ManageProductPage());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Inter',
       ),
       debugShowCheckedModeBanner: false,
-      home: const ManageProductPage(),
+      home: const MarketplacePage(),
     );
   }
 }

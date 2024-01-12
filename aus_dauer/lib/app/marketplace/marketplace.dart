@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../manage_product/add_product.dart';
+import '../manage_product/manage_product.dart';
+
 class MarketplacePage extends StatefulWidget {
   const MarketplacePage({Key? key}) : super(key: key);
 
@@ -58,13 +61,15 @@ class _MarketplacePageState extends State<MarketplacePage> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(""),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.menu,
-              size: 30,
+          leading: Builder(
+            builder: (context) => IconButton(
+              onPressed: () {
+                Scaffold.of(context).openDrawer(); // Open the drawer
+              },
+              icon: const Icon(
+                Icons.menu,
+                size: 30,
+              ),
             ),
           ),
           actions: [
@@ -86,6 +91,145 @@ class _MarketplacePageState extends State<MarketplacePage> {
             ),
           ),
         ),
+        bottomNavigationBar: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            indicatorColor: Colors.blue.shade100,
+            labelTextStyle: MaterialStateProperty.all(
+              TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            ),
+          ),
+          child: NavigationBar(
+            height: 60,
+            selectedIndex: 0,
+            destinations: [
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.home_outlined,
+                        size: 30,
+                        color: Color(0xFF9F948B),
+                      ),
+                      Text(
+                        "Home",
+                        style: TextStyle(
+                          color: Color(0xFF9F948B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageProductPage(),
+                    ),
+                  );
+                },
+              ),
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.shopping_cart_outlined,
+                        size: 30,
+                        color: Color(0xFF607274),
+                      ),
+                      Text(
+                        "Marketplace",
+                        style: TextStyle(
+                          color: Color(0xFF607274),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MarketplacePage(),
+                    ),
+                  );
+                },
+              ),
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.work_outline_outlined,
+                        size: 30,
+                        color: Color(0xFF9F948B),
+                      ),
+                      Text(
+                        "Freelance",
+                        style: TextStyle(
+                          color: Color(0xFF9F948B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageProductPage(),
+                    ),
+                  );
+                },
+              ),
+              InkWell(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.person_2_outlined,
+                        size: 30,
+                        color: Color(0xFF9F948B),
+                      ),
+                      Text(
+                        "Profile",
+                        style: TextStyle(
+                          color: Color(0xFF9F948B),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageProductPage(),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        drawer: const NavigationDrawer(),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
@@ -312,4 +456,93 @@ class _MarketplacePageState extends State<MarketplacePage> {
       ),
     );
   }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(24),
+                child: Wrap(
+                  runSpacing: 16,
+                  children: [
+                    ListTile(
+                      title: const Text(
+                        "ausdauer",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 30.0,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MarketplacePage(),
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'lib/assets/discover.png',
+                        width: MediaQuery.of(context).size.width / 11,
+                      ),
+                      title: const Text("Discover"),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'lib/assets/history.png',
+                        width: MediaQuery.of(context).size.width / 11,
+                      ),
+                      title: const Text("History"),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'lib/assets/chat.png',
+                        width: MediaQuery.of(context).size.width / 11,
+                      ),
+                      title: const Text("Chats"),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'lib/assets/products.png',
+                        width: MediaQuery.of(context).size.width / 11,
+                      ),
+                      title: const Text("Your Products"),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ManageProductPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'lib/assets/clipboard.png',
+                        width: MediaQuery.of(context).size.width / 11,
+                      ),
+                      title: const Text("Orders"),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 }
