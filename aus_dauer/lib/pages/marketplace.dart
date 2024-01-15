@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import './add_product.dart';
 import './manage_product.dart';
 import './landing_page.dart';
+import './orders_page.dart';
 
 class MarketplacePage extends StatefulWidget {
   const MarketplacePage({Key? key}) : super(key: key);
@@ -132,6 +133,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
           title: Text(""),
           leading: Builder(
             builder: (context) => IconButton(
+              padding: EdgeInsets.symmetric(horizontal: 20),
               onPressed: () {
                 Scaffold.of(context).openDrawer(); // Open the drawer
               },
@@ -143,6 +145,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
           ),
           actions: [
             IconButton(
+              padding: EdgeInsets.symmetric(horizontal: 20),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -631,7 +634,14 @@ class NavigationDrawer extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 11,
                       ),
                       title: const Text("Orders"),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const OrdersPage(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

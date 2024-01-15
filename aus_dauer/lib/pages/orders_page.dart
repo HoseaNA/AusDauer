@@ -5,24 +5,24 @@ import './add_product.dart';
 import './marketplace.dart';
 import './landing_page.dart';
 import './edit_product.dart';
-import './orders_page.dart';
+import './manage_product.dart';
 
-class ManageProductPage extends StatefulWidget {
-  const ManageProductPage({Key? key}) : super(key: key);
+class OrdersPage extends StatefulWidget {
+  const OrdersPage({Key? key}) : super(key: key);
 
   @override
-  State<ManageProductPage> createState() => _ManageProductPageState();
+  State<OrdersPage> createState() => _OrdersPageState();
 }
 
-class _ManageProductPageState extends State<ManageProductPage> {
-  final List<Map> items = [
-    {"nama": "Cookies", "sales": 7000},
-    {"nama": "Donat", "sales": 400},
-    {"nama": "Keju", "sales": 7600},
-    {"nama": "Nasi", "sales": 5},
-    {"nama": "Cookies", "sales": 7000},
-    {"nama": "Donat", "sales": 400},
-    {"nama": "Keju", "sales": 7600},
+class _OrdersPageState extends State<OrdersPage> {
+  final List<Map<String, dynamic>> orders = [
+    {"buyer": "Rita Arnold", "nama": "Cookies"},
+    {"buyer": "Rita Arnold", "nama": "Cookies"},
+    {"buyer": "Rita Arnold", "nama": "Cookies"},
+    {"buyer": "Rita Arnold", "nama": "Cookies"},
+    {"buyer": "Rita Arnold", "nama": "Cookies"},
+    {"buyer": "Rita Arnold", "nama": "Cookies"},
+    {"buyer": "Rita Arnold", "nama": "Cookies"},
   ];
 
   @override
@@ -53,12 +53,12 @@ class _ManageProductPageState extends State<ManageProductPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const OrdersPage(),
+                    builder: (context) => const ManageProductPage(),
                   ),
                 );
               },
               icon: Image.asset(
-                'assets/icons/clipboard.png',
+                'assets/icons/products.png',
                 width: MediaQuery.of(context).size.width / 11,
               ),
             ),
@@ -221,113 +221,118 @@ class _ManageProductPageState extends State<ManageProductPage> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Manage Your Products",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        Builder(
-                          builder: (context) => InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const AddProductPage(),
-                                ),
-                              );
-                            },
-                            child: Image.asset(
-                              'assets/icons/add_product.png',
-                              width: MediaQuery.of(context).size.width / 11,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Pending Orders",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.0,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ]),
                   ),
-                  SizedBox(height: 15),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 10.0,
-                              mainAxisExtent: 180),
-                      itemCount: items.length,
-                      itemBuilder: (_, index) {
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      children: orders.map((data) {
                         return InkWell(
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const EditProductPage(),
+                                builder: (context) => const ManageProductPage(),
                               ),
                             );
                           },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.grey.withOpacity(0.2)),
-                                borderRadius: BorderRadius.circular(10.0)),
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 100,
-                                    child: Image.asset(
-                                      'assets/images/cookie.png',
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5.0),
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 15),
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          "${items.elementAt(index)['nama']}",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 18.0,
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            border:
+                                                Border.all(color: Colors.black),
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              8,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              8,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                            child: Image.asset(
+                                              'assets/images/discover_blue.png',
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
                                         ),
-                                        Text(
-                                          "${items.elementAt(index)['sales']} sales",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                          ),
-                                        )
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "${data['buyer']}",
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 16.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              "${data['nama']}",
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ],
                                     ),
+                                  ),
+                                  Image.asset(
+                                    'assets/icons/next.png',
+                                    width:
+                                        MediaQuery.of(context).size.width / 10,
                                   )
                                 ],
                               ),
-                            ),
+                              PreferredSize(
+                                preferredSize: Size.fromHeight(
+                                    1.0), // Adjust the height as needed
+                                child: Container(
+                                  height: 1.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
                           ),
                         );
-                      },
+                      }).toList(),
                     ),
                   ),
                 ],
@@ -422,7 +427,7 @@ class NavigationDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const OrdersPage(),
+                          builder: (context) => const EditProductPage(),
                         ),
                       );
                     },
