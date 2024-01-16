@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/order_info.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ import './marketplace.dart';
 import './landing_page.dart';
 import './edit_product.dart';
 import './manage_product.dart';
+import './order_info.dart';
 
 class OrdersPage extends StatefulWidget {
   const OrdersPage({Key? key}) : super(key: key);
@@ -242,7 +244,8 @@ class _OrdersPageState extends State<OrdersPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const ManageProductPage(),
+                                builder: (context) =>
+                                    const OrderInformationPage(),
                               ),
                             );
                           },
