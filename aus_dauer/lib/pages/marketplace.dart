@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/cart.dart';
 import 'package:aus_dauer/pages/freelance.dart';
 import 'package:aus_dauer/pages/history.dart';
 import 'package:aus_dauer/pages/product_detail.dart';
@@ -150,7 +151,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
             IconButton(
               padding: EdgeInsets.symmetric(horizontal: 20),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CartPage(),
+                  ),
+                );
               },
               icon: const Icon(
                 Icons.shopping_basket_outlined,

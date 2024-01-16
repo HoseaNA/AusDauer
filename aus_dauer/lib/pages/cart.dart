@@ -1,4 +1,5 @@
 import 'package:aus_dauer/pages/freelance.dart';
+import 'package:aus_dauer/pages/history.dart';
 import 'package:aus_dauer/pages/history_detail.dart';
 import 'package:aus_dauer/pages/order_info.dart';
 import 'package:aus_dauer/pages/orders_page.dart';
@@ -13,14 +14,14 @@ import './manage_product.dart';
 import './order_info.dart';
 import './chats.dart';
 
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+class CartPage extends StatefulWidget {
+  const CartPage({Key? key}) : super(key: key);
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _HistoryPageState extends State<HistoryPage> {
+class _CartPageState extends State<CartPage> {
   final List<Map<String, dynamic>> orders = [
     {"buyer": "Rita Arnold", "nama": "Cookies"},
     {"buyer": "Rita Arnold", "nama": "Cookies"},
@@ -40,16 +41,13 @@ class _HistoryPageState extends State<HistoryPage> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(""),
-          leading: Builder(
-            builder: (context) => IconButton(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              onPressed: () {
-                Scaffold.of(context).openDrawer(); // Open the drawer
-              },
-              icon: const Icon(
-                Icons.menu,
-                size: 30,
-              ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Image.asset(
+              'assets/icons/arrow_back.png',
+              width: MediaQuery.of(context).size.width / 11,
             ),
           ),
           bottom: PreferredSize(
@@ -60,7 +58,6 @@ class _HistoryPageState extends State<HistoryPage> {
             ),
           ),
         ),
-        drawer: const NavigationDrawer(),
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
             indicatorColor: Colors.blue.shade100,
@@ -213,7 +210,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "History",
+                            "Your Cart",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w700,
@@ -345,7 +342,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const HistoryDetailPage(),
+                                                  const MarketplacePage(),
                                             ),
                                           );
                                         },
@@ -355,8 +352,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                                   .width /
                                               5,
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: const Color(0xFF072389)),
+                                            color: Colors.red,
+                                            border:
+                                                Border.all(color: Colors.red),
                                             borderRadius:
                                                 BorderRadius.circular(5.0),
                                           ),
@@ -364,10 +362,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                             child: Padding(
                                               padding: EdgeInsets.all(3),
                                               child: Text(
-                                                'Details',
+                                                'Remove',
                                                 style: TextStyle(
-                                                  color:
-                                                      const Color(0xFF072389),
+                                                  color: Colors.white,
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 12.0,
                                                 ),
@@ -402,113 +399,4 @@ class _HistoryPageState extends State<HistoryPage> {
       ),
     );
   }
-}
-
-class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => Drawer(
-          child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(24),
-              child: Wrap(
-                runSpacing: 16,
-                children: [
-                  ListTile(
-                    title: const Text(
-                      "ausdauer",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 30.0,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LandingPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Image.asset(
-                      'assets/icons/discover.png',
-                      width: MediaQuery.of(context).size.width / 11,
-                    ),
-                    title: const Text("Discover"),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Image.asset(
-                      'assets/icons/history.png',
-                      width: MediaQuery.of(context).size.width / 11,
-                    ),
-                    title: const Text("History"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HistoryPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Image.asset(
-                      'assets/icons/chat.png',
-                      width: MediaQuery.of(context).size.width / 11,
-                    ),
-                    title: const Text("Chats"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ChatsPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Image.asset(
-                      'assets/icons/products.png',
-                      width: MediaQuery.of(context).size.width / 11,
-                    ),
-                    title: const Text("Your Products"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ManageProductPage(),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Image.asset(
-                      'assets/icons/clipboard.png',
-                      width: MediaQuery.of(context).size.width / 11,
-                    ),
-                    title: const Text("Orders"),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OrdersPage(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ));
 }
