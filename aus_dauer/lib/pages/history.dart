@@ -1,5 +1,4 @@
 import 'package:aus_dauer/pages/freelance.dart';
-import 'package:aus_dauer/pages/history.dart';
 import 'package:aus_dauer/pages/order_info.dart';
 import 'package:aus_dauer/pages/orders_page.dart';
 import 'package:flutter/gestures.dart';
@@ -11,15 +10,16 @@ import './landing_page.dart';
 import './edit_product.dart';
 import './manage_product.dart';
 import './order_info.dart';
+import './chats.dart';
 
-class ChatsPage extends StatefulWidget {
-  const ChatsPage({Key? key}) : super(key: key);
+class HistoryPage extends StatefulWidget {
+  const HistoryPage({Key? key}) : super(key: key);
 
   @override
-  State<ChatsPage> createState() => _ChatsPageState();
+  State<HistoryPage> createState() => _HistoryPageState();
 }
 
-class _ChatsPageState extends State<ChatsPage> {
+class _HistoryPageState extends State<HistoryPage> {
   final List<Map<String, dynamic>> orders = [
     {"buyer": "Rita Arnold", "nama": "Cookies"},
     {"buyer": "Rita Arnold", "nama": "Cookies"},
@@ -212,7 +212,7 @@ class _ChatsPageState extends State<ChatsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Recent Chats",
+                            "History",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w700,
@@ -225,108 +225,171 @@ class _ChatsPageState extends State<ChatsPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Column(
                       children: orders.map((data) {
-                        return InkWell(
-                          onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         const OrderInformationPage(),
-                            //   ),
-                            // );
-                          },
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 15),
-                                    child: Row(
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 15),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3.7,
+                                        height:
+                                            MediaQuery.of(context).size.width /
+                                                5.5,
+                                        child: Image.asset(
+                                          'assets/images/discover_blue.png',
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Container(
+                                        height:
+                                            MediaQuery.of(context).size.width /
+                                                5.5,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        "${data['buyer']}",
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 12.0,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(
+                                                        "x4",
+                                                        textAlign:
+                                                            TextAlign.start,
+                                                        style: const TextStyle(
+                                                          color: Colors.grey,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 12.0,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    "${data['buyer']}",
+                                                    textAlign: TextAlign.start,
+                                                    style: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 12.0,
+                                                    ),
+                                                  ),
+                                                ]),
+                                            Text(
+                                              "14-01-2023",
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OrderInformationPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height:
+                                        MediaQuery.of(context).size.width / 5.5,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.black),
-                                            borderRadius:
-                                                BorderRadius.circular(50.0),
+                                        Text(
+                                          "\$20",
+                                          textAlign: TextAlign.start,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 12.0,
                                           ),
+                                        ),
+                                        Container(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
-                                              8,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              8,
-                                          child: ClipRRect(
+                                              5,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: const Color(0xFF072389)),
                                             borderRadius:
-                                                BorderRadius.circular(50.0),
-                                            child: Image.asset(
-                                              'assets/images/discover_blue.png',
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              fit: BoxFit.cover,
-                                            ),
+                                                BorderRadius.circular(5.0),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 20,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${data['buyer']}",
-                                              textAlign: TextAlign.start,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 16.0,
-                                              ),
-                                            ),
-                                            Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.7,
+                                          child: Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(3),
                                               child: Text(
-                                                "asdddddddddddddddddddddddddddddddhsuiachdsudhcuiashcdusahcduashcduisahcduiashcudsahucishau",
-                                                textAlign: TextAlign.start,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w400,
+                                                'Details',
+                                                style: TextStyle(
+                                                  color:
+                                                      const Color(0xFF072389),
+                                                  fontWeight: FontWeight.w700,
                                                   fontSize: 12.0,
                                                 ),
-                                                maxLines: 1,
                                               ),
                                             ),
-                                          ],
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  Image.asset(
-                                    'assets/icons/next.png',
-                                    width:
-                                        MediaQuery.of(context).size.width / 10,
-                                  )
-                                ],
-                              ),
-                              PreferredSize(
-                                preferredSize: Size.fromHeight(
-                                    1.0), // Adjust the height as needed
-                                child: Container(
-                                  height: 1.0,
-                                  color: Colors.grey,
                                 ),
+                              ],
+                            ),
+                            PreferredSize(
+                              preferredSize: Size.fromHeight(
+                                  1.0), // Adjust the height as needed
+                              child: Container(
+                                height: 1.0,
+                                color: Colors.grey,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         );
                       }).toList(),
                     ),

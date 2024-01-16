@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/chats.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _OrderInformationPageState extends State<OrderInformationPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ManageProductPage(),
+                    builder: (context) => const ChatsPage(),
                   ),
                 );
               },

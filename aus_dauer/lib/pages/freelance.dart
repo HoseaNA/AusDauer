@@ -1,4 +1,3 @@
-import 'package:aus_dauer/pages/freelance.dart';
 import 'package:aus_dauer/pages/history.dart';
 import 'package:aus_dauer/pages/product_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,12 +9,13 @@ import './manage_product.dart';
 import './landing_page.dart';
 import './orders_page.dart';
 import './chats.dart';
+import './marketplace.dart';
 
-class MarketplacePage extends StatefulWidget {
-  const MarketplacePage({Key? key}) : super(key: key);
+class FreelancePage extends StatefulWidget {
+  const FreelancePage({Key? key}) : super(key: key);
 
   @override
-  State<MarketplacePage> createState() => _MarketplacePageState();
+  State<FreelancePage> createState() => _FreelancePageState();
 }
 
 class Product {
@@ -44,7 +44,7 @@ class Product {
   });
 }
 
-class _MarketplacePageState extends State<MarketplacePage> {
+class _FreelancePageState extends State<FreelancePage> {
   // ... other methods and variables
   List<Map<String, dynamic>> searched = [];
 
@@ -150,11 +150,16 @@ class _MarketplacePageState extends State<MarketplacePage> {
             IconButton(
               padding: EdgeInsets.symmetric(horizontal: 20),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChatsPage(),
+                  ),
+                );
               },
-              icon: const Icon(
-                Icons.shopping_basket_outlined,
-                size: 30,
+              icon: Image.asset(
+                'assets/icons/chat.png',
+                width: MediaQuery.of(context).size.width / 11,
               ),
             ),
           ],
@@ -217,12 +222,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                       Icon(
                         Icons.shopping_cart_outlined,
                         size: 30,
-                        color: Color(0xFF607274),
+                        color: Color(0xFF9F948B),
                       ),
                       Text(
                         "Marketplace",
                         style: TextStyle(
-                          color: Color(0xFF607274),
+                          color: Color(0xFF9F948B),
                           fontWeight: FontWeight.w700,
                           fontSize: 10.0,
                         ),
@@ -248,12 +253,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                       Icon(
                         Icons.work_outline_outlined,
                         size: 30,
-                        color: Color(0xFF9F948B),
+                        color: Color(0xFF607274),
                       ),
                       Text(
                         "Freelance",
                         style: TextStyle(
-                          color: Color(0xFF9F948B),
+                          color: Color(0xFF607274),
                           fontWeight: FontWeight.w700,
                           fontSize: 10.0,
                         ),
@@ -455,7 +460,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Text(
-                    "Handicrafts",
+                    "Inclusive Tech",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,

@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/freelance.dart';
 import 'package:aus_dauer/pages/product_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -236,7 +237,7 @@ class _LandingState extends State<LandingPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ManageProductPage(),
+                      builder: (context) => const FreelancePage(),
                     ),
                   );
                 },

@@ -1,3 +1,5 @@
+import 'package:aus_dauer/pages/freelance.dart';
+import 'package:aus_dauer/pages/history.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -172,7 +174,7 @@ class _ManageProductPageState extends State<ManageProductPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ManageProductPage(),
+                      builder: (context) => const FreelancePage(),
                     ),
                   );
                 },
@@ -388,7 +390,14 @@ class NavigationDrawer extends StatelessWidget {
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("History"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HistoryPage(),
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     leading: Image.asset(
