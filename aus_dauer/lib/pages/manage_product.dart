@@ -6,6 +6,7 @@ import './marketplace.dart';
 import './landing_page.dart';
 import './edit_product.dart';
 import './orders_page.dart';
+import './chats.dart';
 
 class ManageProductPage extends StatefulWidget {
   const ManageProductPage({Key? key}) : super(key: key);
@@ -395,7 +396,14 @@ class NavigationDrawer extends StatelessWidget {
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("Chats"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChatsPage(),
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     leading: Image.asset(

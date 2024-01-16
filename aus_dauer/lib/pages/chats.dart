@@ -1,4 +1,5 @@
 import 'package:aus_dauer/pages/order_info.dart';
+import 'package:aus_dauer/pages/orders_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -8,16 +9,15 @@ import './landing_page.dart';
 import './edit_product.dart';
 import './manage_product.dart';
 import './order_info.dart';
-import './chats.dart';
 
-class OrdersPage extends StatefulWidget {
-  const OrdersPage({Key? key}) : super(key: key);
+class ChatsPage extends StatefulWidget {
+  const ChatsPage({Key? key}) : super(key: key);
 
   @override
-  State<OrdersPage> createState() => _OrdersPageState();
+  State<ChatsPage> createState() => _ChatsPageState();
 }
 
-class _OrdersPageState extends State<OrdersPage> {
+class _ChatsPageState extends State<ChatsPage> {
   final List<Map<String, dynamic>> orders = [
     {"buyer": "Rita Arnold", "nama": "Cookies"},
     {"buyer": "Rita Arnold", "nama": "Cookies"},
@@ -49,23 +49,6 @@ class _OrdersPageState extends State<OrdersPage> {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ManageProductPage(),
-                  ),
-                );
-              },
-              icon: Image.asset(
-                'assets/icons/products.png',
-                width: MediaQuery.of(context).size.width / 11,
-              ),
-            ),
-          ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(1.0), // Adjust the height as needed
             child: Container(
@@ -227,7 +210,7 @@ class _OrdersPageState extends State<OrdersPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Pending Orders",
+                            "Recent Chats",
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w700,
@@ -242,13 +225,13 @@ class _OrdersPageState extends State<OrdersPage> {
                       children: orders.map((data) {
                         return InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const OrderInformationPage(),
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         const OrderInformationPage(),
+                            //   ),
+                            // );
                           },
                           child: Column(
                             children: [
@@ -304,15 +287,22 @@ class _OrdersPageState extends State<OrdersPage> {
                                                 fontSize: 16.0,
                                               ),
                                             ),
-                                            Text(
-                                              "${data['nama']}",
-                                              textAlign: TextAlign.start,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12.0,
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1.7,
+                                              child: Text(
+                                                "asdddddddddddddddddddddddddddddddhsuiachdsudhcuiashcdusahcduashcduisahcduiashcudsahucishau",
+                                                textAlign: TextAlign.start,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 12.0,
+                                                ),
+                                                maxLines: 1,
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ],
