@@ -1,4 +1,3 @@
-import 'package:aus_dauer/pages/marketplace.dart';
 import 'package:aus_dauer/pages/landing_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';

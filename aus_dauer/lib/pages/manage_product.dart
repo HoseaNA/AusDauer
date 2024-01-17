@@ -1,13 +1,13 @@
+import 'package:aus_dauer/pages/freelance.dart';
+import 'package:aus_dauer/pages/history.dart';
 import 'package:aus_dauer/pages/your_product_detail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import './add_product.dart';
 import './marketplace.dart';
 import './landing_page.dart';
-import './edit_product.dart';
 import './orders_page.dart';
 import './chats.dart';
 
