@@ -1,6 +1,9 @@
-import 'package:aus_dauer/pages/your_product_detail.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:aus_dauer/pages/chat_service.dart';
+import 'package:aus_dauer/pages/freelance.dart';
+import 'package:aus_dauer/pages/history.dart';
+import 'package:aus_dauer/pages/history_detail.dart';
+import 'package:aus_dauer/pages/order_info.dart';
+import 'package:aus_dauer/pages/orders_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -8,78 +11,50 @@ import './add_product.dart';
 import './marketplace.dart';
 import './landing_page.dart';
 import './edit_product.dart';
-import './orders_page.dart';
+import './manage_product.dart';
+import './order_info.dart';
 import './chats.dart';
 
-class ManageProductPage extends StatefulWidget {
-  const ManageProductPage({Key? key}) : super(key: key);
-
-  @override
-  State<ManageProductPage> createState() => _ManageProductPageState();
-}
-
-class Product {
-  final String productId;
-  final String name;
-  final int numberOfItemsSold;
-  final String imagePath;
-
-  Product({
-    required this.productId,
-    required this.name,
-    required this.numberOfItemsSold,
-    required this.imagePath,
+class ChatRoomPage extends StatefulWidget {
+  final String receiverUserEmail;
+  final String receiverUserID;
+  const ChatRoomPage({
+    super.key,
+    required this.receiverUserEmail,
+    required this.receiverUserID,
   });
-}
-
-class _ManageProductPageState extends State<ManageProductPage> {
-  final CollectionReference productsCollection =
-      FirebaseFirestore.instance.collection('products');
-
-  List<Product> items = [];
 
   @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
+  State<ChatRoomPage> createState() => _ChatRoomPageState();
+}
 
-  Future<String> getImageUrl(String imagePath) async {
-    Reference ref = FirebaseStorage.instance.ref().child(imagePath);
-    return await ref.getDownloadURL();
-  }
+class _ChatRoomPageState extends State<ChatRoomPage> {
+  final List<Map<String, dynamic>> chat = [
+    {"senderId": 1, "message": "p"},
+    {"senderId": 1, "message": "apa kabar"},
+    {"senderId": 2, "message": "baik, lu gimans"},
+    {"senderId": 1, "message": "aman fren"},
+    {
+      "senderId": 2,
+      "message":
+          "asdasdsauidgausdgasyudgyuascgndasuygbcdbyasngcdsyagucbdtsyacbfdiuashdncasdcgnscdansiicydgasnda"
+    },
+  ];
 
-  Future<void> fetchData() async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> productsSnapshot =
-          await productsCollection.get() as QuerySnapshot<Map<String, dynamic>>;
+  final _formKey = GlobalKey<FormState>();
+  String? _message;
 
-      List<Product> productList = [];
+  final TextEditingController _messageController = TextEditingController();
+  final ChatService _chatService = ChatService();
+  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-      for (QueryDocumentSnapshot<Map<String, dynamic>> productDoc
-          in productsSnapshot.docs) {
-        Map<String, dynamic> productData = productDoc.data();
-
-        // Load image URL from Firebase Storage
-        String imageUrl = await getImageUrl(productData['image']);
-
-        if (productData['sellerID'] == '56NXH5Jrej7i4p0CjxyY') { //TODO : Change this to the current user's ID
-          Product product = Product(
-            productId: productDoc.id,
-            name: productData['name'],
-            numberOfItemsSold: productData['sold'],
-            imagePath: imageUrl,
-          );
-
-          productList.add(product);
-        }
-      }
-
-      setState(() {
-        items = productList;
-      });
-    } catch (e) {
-      print('ERROR! : $e');
+  void sendMessage() async {
+    // only send message if there is something to send
+    if (_messageController.text.isNotEmpty) {
+      await _chatService.sendMessage(
+          widget.receiverUserID, _messageController.text);
+      // clear the text controller after sending the message
+      _messageController.clear();
     }
   }
 
@@ -102,23 +77,6 @@ class _ManageProductPageState extends State<ManageProductPage> {
               ),
             ),
           ),
-          actions: [
-            IconButton(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const OrdersPage(),
-                  ),
-                );
-              },
-              icon: Image.asset(
-                'assets/icons/clipboard.png',
-                width: MediaQuery.of(context).size.width / 11,
-              ),
-            ),
-          ],
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(1.0), // Adjust the height as needed
             child: Container(
@@ -266,133 +224,166 @@ class _ManageProductPageState extends State<ManageProductPage> {
             ],
           ),
         ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            // padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-            child: Container(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+        body: Stack(
+          children: [
+            Container(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context)
+                    .size
+                    .height, // Set the minimum height you desire
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20),
+                  child: Column(
+                    children: chat.map((data) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        alignment: (data['senderId'] == 1
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft),
+                        child: Row(
+                          mainAxisAlignment: (data['senderId'] == 1
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start),
+                          children: [
+                            (data['senderId'] == 1)
+                                ? SizedBox.shrink()
+                                : Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black),
+                                      borderRadius: BorderRadius.circular(50.0),
+                                    ),
+                                    width:
+                                        MediaQuery.of(context).size.width / 8,
+                                    height:
+                                        MediaQuery.of(context).size.width / 8,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50.0),
+                                      child: Image.asset(
+                                        'assets/images/discover_blue.png',
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                            (data['senderId'] == 1)
+                                ? SizedBox.shrink()
+                                : SizedBox(width: 10),
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.of(context).size.width / 1.5,
+                                // Set the minimum height you desire
+                              ),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5.0),
+                                color: (data['senderId'] == 1
+                                    ? Colors.grey.withOpacity(0.2)
+                                    : Colors.white),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  data['message'],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height / 1.4,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width / 1.5),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.grey.withOpacity(0.2)),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "Manage Your Products",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20.0,
-                          ),
-                        ),
-                        Builder(
-                          builder: (context) => InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const AddProductPage(),
-                                ),
-                              );
-                            },
+                        InkWell(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 14,
+                            height: MediaQuery.of(context).size.width / 14,
                             child: Image.asset(
-                              'assets/icons/add_product.png',
-                              width: MediaQuery.of(context).size.width / 11,
+                              'assets/icons/attach.png',
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.8,
+                          child: TextFormField(
+                            controller: _messageController,
+                            decoration: InputDecoration(
+                              hintText: "Enter your message",
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 0.0, vertical: 0.0),
+                              // Added a circular border to make it neater
+                            ),
+                            // Added behavior when name is typed
+                            onChanged: (String? value) {
+                              setState(() {
+                                _message = value!;
+                              });
+                            },
+                            // Added behavior when data is saved
+                            onSaved: (String? value) {
+                              setState(() {
+                                _message = value!;
+                              });
+                            },
+                            // Validator as form validation
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Mohon isi message!';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 15,
+                            height: MediaQuery.of(context).size.width / 15,
+                            child: Image.asset(
+                              'assets/icons/sendchat.png',
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(height: 15),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10.0,
-                              mainAxisSpacing: 10.0,
-                              mainAxisExtent: 180),
-                      itemCount: items.length,
-                      itemBuilder: (_, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => YourProductDetail(
-                                  productId: items[index].productId,
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.grey.withOpacity(0.2)),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 100,
-                                    child: Image.network(
-                                      items[index].imagePath,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Container(
-                                    margin: EdgeInsets.only(top: 5.0),
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${items.elementAt(index).name}",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 18.0,
-                                          ),
-                                        ),
-                                        Text(
-                                          "${items.elementAt(index).numberOfItemsSold} sales",
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
+            )
+          ],
         ),
       ),
     );

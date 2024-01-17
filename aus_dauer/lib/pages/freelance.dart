@@ -1,24 +1,24 @@
-import 'package:aus_dauer/pages/cart.dart';
-import 'package:aus_dauer/pages/freelance.dart';
 import 'package:aus_dauer/pages/history.dart';
 import 'package:aus_dauer/pages/product_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
+import './add_product.dart';
 import './manage_product.dart';
 import './landing_page.dart';
 import './orders_page.dart';
 import './chats.dart';
+import './marketplace.dart';
 
-class MarketplacePage extends StatefulWidget {
-  const MarketplacePage({Key? key}) : super(key: key);
+class FreelancePage extends StatefulWidget {
+  const FreelancePage({Key? key}) : super(key: key);
 
   @override
-  State<MarketplacePage> createState() => _MarketplacePageState();
+  State<FreelancePage> createState() => _FreelancePageState();
 }
 
 class Product {
-  final String productId;
   final String name;
   final String description;
   final int numberOfReviews;
@@ -28,10 +28,9 @@ class Product {
   final int numberOfItemsSold;
   final int stock;
   final String imagePath;
-  final String sellerName;
+  String sellerName;
 
   Product({
-    required this.productId,
     required this.name,
     required this.description,
     required this.numberOfReviews,
@@ -45,7 +44,8 @@ class Product {
   });
 }
 
-class _MarketplacePageState extends State<MarketplacePage> {
+class _FreelancePageState extends State<FreelancePage> {
+  // ... other methods and variables
   List<Map<String, dynamic>> searched = [];
 
   final CollectionReference productsCollection =
@@ -84,7 +84,6 @@ class _MarketplacePageState extends State<MarketplacePage> {
         String imageUrl = await getImageUrl(productData['image']);
 
         Product product = Product(
-          productId: productDoc.id,
           name: productData['name'],
           description: productData['description'],
           numberOfReviews: productData['reviews'],
@@ -113,16 +112,16 @@ class _MarketplacePageState extends State<MarketplacePage> {
     return await ref.getDownloadURL();
   }
 
-  // void _runFilter(String enteredKeyword) {
-  //   List<Map<String, dynamic>> results = [];
-  //   if (enteredKeyword.isEmpty) {
-  //     //results = allsearched;
-  //   } else {
-  //     // results = allsearched.where((user) => user["name"]
-  //     //     .toLowerCase()
-  //     //     .contains(enteredKeyword.toLowerCase())).toList();
-  //   }
-  // }
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      //results = allsearched;
+    } else {
+      // results = allsearched.where((user) => user["name"]
+      //     .toLowerCase()
+      //     .contains(enteredKeyword.toLowerCase())).toList();
+    }
+  }
 
   // setState((){
   //   allsearched = results;
@@ -134,7 +133,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text(""),
+          title: Text(""),
           leading: Builder(
             builder: (context) => IconButton(
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -154,18 +153,18 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const CartPage(),
+                    builder: (context) => const ChatsPage(),
                   ),
                 );
               },
-              icon: const Icon(
-                Icons.shopping_basket_outlined,
-                size: 30,
+              icon: Image.asset(
+                'assets/icons/chat.png',
+                width: MediaQuery.of(context).size.width / 11,
               ),
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1.0), // Adjust the height as needed
+            preferredSize: Size.fromHeight(1.0), // Adjust the height as needed
             child: Container(
               height: 1.0,
               color: Colors.black,
@@ -176,10 +175,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
           data: NavigationBarThemeData(
             indicatorColor: Colors.blue.shade100,
             labelTextStyle: MaterialStateProperty.all(
-              const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
+              TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
             ),
           ),
           child: NavigationBar(
@@ -187,7 +183,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
             selectedIndex: 0,
             destinations: [
               InkWell(
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -218,7 +214,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 },
               ),
               InkWell(
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -226,12 +222,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                       Icon(
                         Icons.shopping_cart_outlined,
                         size: 30,
-                        color: Color(0xFF607274),
+                        color: Color(0xFF9F948B),
                       ),
                       Text(
                         "Marketplace",
                         style: TextStyle(
-                          color: Color(0xFF607274),
+                          color: Color(0xFF9F948B),
                           fontWeight: FontWeight.w700,
                           fontSize: 10.0,
                         ),
@@ -249,7 +245,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 },
               ),
               InkWell(
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -257,12 +253,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                       Icon(
                         Icons.work_outline_outlined,
                         size: 30,
-                        color: Color(0xFF9F948B),
+                        color: Color(0xFF607274),
                       ),
                       Text(
                         "Freelance",
                         style: TextStyle(
-                          color: Color(0xFF9F948B),
+                          color: Color(0xFF607274),
                           fontWeight: FontWeight.w700,
                           fontSize: 10.0,
                         ),
@@ -280,7 +276,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 },
               ),
               InkWell(
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -318,19 +314,19 @@ class _MarketplacePageState extends State<MarketplacePage> {
           scrollDirection: Axis.vertical,
           child: Padding(
             // padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            padding: EdgeInsets.symmetric(vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
+                SizedBox(
                   height: 10,
                 ),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextField(
                     // onChanged: (value) => _runFilter(value),
                     decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
+                      contentPadding: EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 10.0),
                       hintText: 'Search',
                       filled: true,
@@ -353,12 +349,10 @@ class _MarketplacePageState extends State<MarketplacePage> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                SizedBox(height: 15),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: const Text(
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
                     "For You",
                     style: TextStyle(
                       color: Colors.black,
@@ -368,106 +362,105 @@ class _MarketplacePageState extends State<MarketplacePage> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 4,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      Product data = products[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProductDetail(
-                                productId: products[index].productId,
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      children: products.map((data) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductDetail(
+                                    productId: '4gUCNhdHELl1lWcA8usm'),
                               ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.grey.withOpacity(0.2)),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                          );
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 2.0,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.grey.withOpacity(0.2)),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 8,
-                                  width: MediaQuery.of(context).size.height / 4,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(data.imagePath),
-                                      fit: BoxFit.cover,
-                                    ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  Image(
+                                    image: NetworkImage(data.imagePath),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
                                   ),
-                                ),
-                                const SizedBox(height: 10.0),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              data.sellerName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                         Text(
-                                          data.name,
-                                          textAlign: TextAlign.start,
+                                          "\$${data.price}",
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w700,
                                             fontSize: 18.0,
                                           ),
-                                        ),
-                                        Text(
-                                          data.sellerName,
-                                          textAlign: TextAlign.start,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
+                                        )
                                       ],
                                     ),
-                                    Text(
-                                      "\$${data.price}",
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 15.0),
+                SizedBox(height: 15.0),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Image.asset(
                     'assets/images/discover_product.png',
                     width: MediaQuery.of(context).size.width,
                   ),
                 ),
-                const SizedBox(height: 15.0),
+                SizedBox(height: 15.0),
                 Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: const Text(
-                    "Handicrafts",
+                  margin: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    "Inclusive Tech",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,
@@ -476,91 +469,90 @@ class _MarketplacePageState extends State<MarketplacePage> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                SizedBox(
-                  height: 200.0,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      Product data = products[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ProductDetail(
-                                  productId: '4gUCNhdHELl1lWcA8usm'),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      children: products.map((data) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductDetail(
+                                    productId: '4gUCNhdHELl1lWcA8usm'),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.grey.withOpacity(0.2)),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                          );
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width /
-                              2.0, // Updated width
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.grey.withOpacity(0.2)),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 8,
-                                  width: MediaQuery.of(context).size.height / 4,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(data.imagePath),
-                                      fit: BoxFit.cover,
-                                    ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  Image(
+                                    image: NetworkImage(data.imagePath),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
                                   ),
-                                ),
-                                const SizedBox(height: 10.0),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              data.sellerName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                         Text(
-                                          data.name,
-                                          textAlign: TextAlign.start,
+                                          "\$${data.price}",
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w700,
                                             fontSize: 18.0,
                                           ),
-                                        ),
-                                        Text(
-                                          data.sellerName,
-                                          textAlign: TextAlign.start,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
+                                        )
                                       ],
                                     ),
-                                    Text(
-                                      "\$${data.price}",
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ],
