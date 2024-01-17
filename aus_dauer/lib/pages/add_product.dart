@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +22,7 @@ class _AddProductPageState extends State<AddProductPage> {
   int? _stock;
   String? _description;
   String? _picture;
+  PlatformFile? pickedFile;
   final _nameController = TextEditingController();
   final _priceController = TextEditingController();
   final _stockController = TextEditingController();
@@ -264,20 +269,39 @@ class _AddProductPageState extends State<AddProductPage> {
                     ),
                   ),
                   SizedBox(height: 15.0),
-                  Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Image',
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.5),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
+                  GestureDetector(
+                    onTap: () async {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles(
+                        allowMultiple: false,
+                        type: FileType.custom,
+                        allowedExtensions: ['jpg', 'png', 'jpeg'],
+                      );
+
+                      if (result != null && result.files.isNotEmpty) {
+                        pickedFile = result.files.first;
+                        setState(() {
+                          _picture = '/images/${pickedFile?.name}';
+                        });
+                      } else {
+                        // Handle case when no file is selected
+                      }
+                    },
+                    child: Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Image',
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.5),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20.0,
+                          ),
                         ),
                       ),
                     ),
@@ -319,11 +343,15 @@ class _AddProductPageState extends State<AddProductPage> {
                           'stock': _stock,
                           'description': _description,
                           'image': _picture,
-                          'seller': '56NXH5Jrej7i4p0CjxyY',
+                          'sellerID': '56NXH5Jrej7i4p0CjxyY',
                           'sold': 0,
                           'reviews': 0,
                           'rating': 0.0,
                         });
+
+                        final ref =
+                            FirebaseStorage.instance.ref().child(_picture ?? '');
+                        await ref.putFile(File(pickedFile!.path!));
 
                         _nameController.clear();
                         _priceController.clear();
@@ -340,7 +368,20 @@ class _AddProductPageState extends State<AddProductPage> {
                         ScaffoldMessenger.of(context).showSnackBar(successBar);
                         Navigator.pop(context);
                       } catch (e) {
-                        print('Error adding product to Firestore: $e');
+                        _nameController.clear();
+                        _priceController.clear();
+                        _stockController.clear();
+                        _descriptionController.clear();
+                        _pictureController.clear();
+                        final successBar = SnackBar(
+                          content: Text("Product GAGAL disimpan! $e"),
+                          action: SnackBarAction(
+                            label: 'Hide',
+                            onPressed: () {},
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(successBar);
+                        Navigator.pop(context);
                       }
                     }
                   },
