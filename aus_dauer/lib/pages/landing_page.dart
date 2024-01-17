@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/chat_room.dart';
 import 'package:aus_dauer/pages/freelance.dart';
 import 'package:aus_dauer/pages/product_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -268,7 +269,9 @@ class _LandingState extends State<LandingPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ManageProductPage(),
+                      builder: (context) => const ChatRoomPage(
+                          receiverUserEmail: 'oke@gmail.com',
+                          receiverUserID: '1'),
                     ),
                   );
                 },
