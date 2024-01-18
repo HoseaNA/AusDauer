@@ -389,10 +389,16 @@ class _FreelancePageState extends State<FreelancePage> {
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  Image(
-                                    image: NetworkImage(data.imagePath),
+                                  Container(
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
+                                    height:
+                                        MediaQuery.of(context).size.height / 8,
+                                    child: Image(
+                                      image: NetworkImage(data.imagePath),
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                   const SizedBox(height: 10.0),
                                   Container(
@@ -496,10 +502,16 @@ class _FreelancePageState extends State<FreelancePage> {
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  Image(
-                                    image: NetworkImage(data.imagePath),
+                                  Container(
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
+                                    height:
+                                        MediaQuery.of(context).size.height / 8,
+                                    child: Image(
+                                      image: NetworkImage(data.imagePath),
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                   const SizedBox(height: 10.0),
                                   Container(
@@ -588,6 +600,13 @@ class NavigationDrawer extends StatelessWidget {
                           fontSize: 30.0,
                         ),
                       ),
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'assets/icons/discover.png',
+                        width: MediaQuery.of(context).size.width / 11,
+                      ),
+                      title: const Text("Discover"),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -596,14 +615,6 @@ class NavigationDrawer extends StatelessWidget {
                           ),
                         );
                       },
-                    ),
-                    ListTile(
-                      leading: Image.asset(
-                        'assets/icons/discover.png',
-                        width: MediaQuery.of(context).size.width / 11,
-                      ),
-                      title: const Text("Discover"),
-                      onTap: () {},
                     ),
                     ListTile(
                       leading: Image.asset(

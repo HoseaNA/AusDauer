@@ -375,14 +375,6 @@ class NavigationDrawer extends StatelessWidget {
                         fontSize: 30.0,
                       ),
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LandingPage(),
-                        ),
-                      );
-                    },
                   ),
                   ListTile(
                     leading: Image.asset(
@@ -394,7 +386,7 @@ class NavigationDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MarketplacePage(),
+                          builder: (context) => const LandingPage(),
                         ),
                       );
                     },

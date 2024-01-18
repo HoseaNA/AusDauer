@@ -165,7 +165,8 @@ class _MarketplacePageState extends State<MarketplacePage> {
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1.0), // Adjust the height as needed
+            preferredSize:
+                const Size.fromHeight(1.0), // Adjust the height as needed
             child: Container(
               height: 1.0,
               color: Colors.black,
@@ -371,6 +372,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 4,
                   child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     scrollDirection: Axis.horizontal,
                     itemCount: products.length,
                     itemBuilder: (context, index) {
@@ -387,7 +389,6 @@ class _MarketplacePageState extends State<MarketplacePage> {
                           );
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width / 2.0,
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             border:
@@ -401,11 +402,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                                 Container(
                                   height:
                                       MediaQuery.of(context).size.height / 8,
-                                  width: MediaQuery.of(context).size.height / 4,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(data.imagePath),
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
@@ -477,8 +479,9 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 ),
                 const SizedBox(height: 15),
                 SizedBox(
-                  height: 200.0,
+                  height: MediaQuery.of(context).size.height / 4,
                   child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     scrollDirection: Axis.horizontal,
                     itemCount: products.length,
                     itemBuilder: (context, index) {
@@ -488,14 +491,13 @@ class _MarketplacePageState extends State<MarketplacePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ProductDetail(
-                                  productId: '4gUCNhdHELl1lWcA8usm'),
+                              builder: (context) => ProductDetail(
+                                productId: products[index].productId,
+                              ),
                             ),
                           );
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width /
-                              2.0, // Updated width
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             border:
@@ -509,11 +511,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                                 Container(
                                   height:
                                       MediaQuery.of(context).size.height / 8,
-                                  width: MediaQuery.of(context).size.height / 4,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(data.imagePath),
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
@@ -596,14 +599,6 @@ class NavigationDrawer extends StatelessWidget {
                           fontSize: 30.0,
                         ),
                       ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LandingPage(),
-                          ),
-                        );
-                      },
                     ),
                     ListTile(
                       leading: Image.asset(
@@ -615,7 +610,7 @@ class NavigationDrawer extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MarketplacePage(),
+                            builder: (context) => const LandingPage(),
                           ),
                         );
                       },

@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/chat_room.dart';
 import 'package:aus_dauer/pages/freelance.dart';
 import 'package:aus_dauer/pages/history.dart';
 import 'package:aus_dauer/pages/order_info.dart';
@@ -227,13 +228,14 @@ class _ChatsPageState extends State<ChatsPage> {
                       children: orders.map((data) {
                         return InkWell(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         const OrderInformationPage(),
-                            //   ),
-                            // );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ChatRoomPage(
+                                    receiverUserEmail: '1',
+                                    receiverUserID: '1'),
+                              ),
+                            );
                           },
                           child: Column(
                             children: [
@@ -365,14 +367,6 @@ class NavigationDrawer extends StatelessWidget {
                         fontSize: 30.0,
                       ),
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LandingPage(),
-                        ),
-                      );
-                    },
                   ),
                   ListTile(
                     leading: Image.asset(
@@ -384,7 +378,7 @@ class NavigationDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MarketplacePage(),
+                          builder: (context) => const LandingPage(),
                         ),
                       );
                     },
