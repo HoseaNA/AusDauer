@@ -165,7 +165,8 @@ class _MarketplacePageState extends State<MarketplacePage> {
             ),
           ],
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1.0), // Adjust the height as needed
+            preferredSize:
+                const Size.fromHeight(1.0), // Adjust the height as needed
             child: Container(
               height: 1.0,
               color: Colors.black,
@@ -371,6 +372,7 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 4,
                   child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     scrollDirection: Axis.horizontal,
                     itemCount: products.length,
                     itemBuilder: (context, index) {
@@ -387,7 +389,6 @@ class _MarketplacePageState extends State<MarketplacePage> {
                           );
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width / 2.0,
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             border:
@@ -401,52 +402,74 @@ class _MarketplacePageState extends State<MarketplacePage> {
                                 Container(
                                   height:
                                       MediaQuery.of(context).size.height / 8,
-                                  width: MediaQuery.of(context).size.height / 4,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(data.imagePath),
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
                                 const SizedBox(height: 10.0),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          data.name,
-                                          textAlign: TextAlign.start,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 18.0,
-                                          ),
+                                Container(
+                                  width: MediaQuery.of(context)
+                                      .size
+                                      .width / 2.5, // Set your desired width
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5, // Set half of the desired width
+                                              child: Text(
+                                                data.name,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 18.0,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5, // Set half of the desired width
+                                              child: Text(
+                                                data.sellerName,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14.0,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          data.sellerName,
-                                          textAlign: TextAlign.start,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      "\$${data.price}",
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18.0,
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                      Text(
+                                        "\$${data.price}",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 18.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -477,8 +500,9 @@ class _MarketplacePageState extends State<MarketplacePage> {
                 ),
                 const SizedBox(height: 15),
                 SizedBox(
-                  height: 200.0,
+                  height: MediaQuery.of(context).size.height / 4,
                   child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
                     scrollDirection: Axis.horizontal,
                     itemCount: products.length,
                     itemBuilder: (context, index) {
@@ -488,14 +512,13 @@ class _MarketplacePageState extends State<MarketplacePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ProductDetail(
-                                  productId: '4gUCNhdHELl1lWcA8usm'),
+                              builder: (context) => ProductDetail(
+                                productId: products[index].productId,
+                              ),
                             ),
                           );
                         },
                         child: Container(
-                          width: MediaQuery.of(context).size.width /
-                              2.0, // Updated width
                           margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             border:
@@ -509,11 +532,12 @@ class _MarketplacePageState extends State<MarketplacePage> {
                                 Container(
                                   height:
                                       MediaQuery.of(context).size.height / 8,
-                                  width: MediaQuery.of(context).size.height / 4,
+                                  width:
+                                      MediaQuery.of(context).size.width / 2.5,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(data.imagePath),
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
@@ -596,6 +620,13 @@ class NavigationDrawer extends StatelessWidget {
                           fontSize: 30.0,
                         ),
                       ),
+                    ),
+                    ListTile(
+                      leading: Image.asset(
+                        'assets/icons/discover.png',
+                        width: MediaQuery.of(context).size.width / 11,
+                      ),
+                      title: const Text("Discover"),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -604,14 +635,6 @@ class NavigationDrawer extends StatelessWidget {
                           ),
                         );
                       },
-                    ),
-                    ListTile(
-                      leading: Image.asset(
-                        'assets/icons/discover.png',
-                        width: MediaQuery.of(context).size.width / 11,
-                      ),
-                      title: const Text("Discover"),
-                      onTap: () {},
                     ),
                     ListTile(
                       leading: Image.asset(

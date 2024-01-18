@@ -428,6 +428,13 @@ class NavigationDrawer extends StatelessWidget {
                         fontSize: 30.0,
                       ),
                     ),
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      'assets/icons/discover.png',
+                      width: MediaQuery.of(context).size.width / 11,
+                    ),
+                    title: const Text("Discover"),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -436,14 +443,6 @@ class NavigationDrawer extends StatelessWidget {
                         ),
                       );
                     },
-                  ),
-                  ListTile(
-                    leading: Image.asset(
-                      'assets/icons/discover.png',
-                      width: MediaQuery.of(context).size.width / 11,
-                    ),
-                    title: const Text("Discover"),
-                    onTap: () {},
                   ),
                   ListTile(
                     leading: Image.asset(

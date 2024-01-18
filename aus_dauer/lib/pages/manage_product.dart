@@ -63,7 +63,8 @@ class _ManageProductPageState extends State<ManageProductPage> {
         // Load image URL from Firebase Storage
         String imageUrl = await getImageUrl(productData['image']);
 
-        if (productData['sellerID'] == '56NXH5Jrej7i4p0CjxyY') { //TODO : Change this to the current user's ID
+        if (productData['sellerID'] == '56NXH5Jrej7i4p0CjxyY') {
+          //TODO : Change this to the current user's ID
           Product product = Product(
             productId: productDoc.id,
             name: productData['name'],
@@ -423,6 +424,13 @@ class NavigationDrawer extends StatelessWidget {
                         fontSize: 30.0,
                       ),
                     ),
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      'assets/icons/discover.png',
+                      width: MediaQuery.of(context).size.width / 11,
+                    ),
+                    title: const Text("Discover"),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -431,14 +439,6 @@ class NavigationDrawer extends StatelessWidget {
                         ),
                       );
                     },
-                  ),
-                  ListTile(
-                    leading: Image.asset(
-                      'assets/icons/discover.png',
-                      width: MediaQuery.of(context).size.width / 11,
-                    ),
-                    title: const Text("Discover"),
-                    onTap: () {},
                   ),
                   ListTile(
                     leading: Image.asset(

@@ -1,3 +1,4 @@
+import 'package:aus_dauer/pages/cart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -168,8 +169,12 @@ class _ProductDetailState extends State<ProductDetail> {
                             width: MediaQuery.of(context).size.width,
                             child: ElevatedButton(
                               onPressed: () {
-                                // TODO: add to cart
-                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const CartPage(),
+                                  ),
+                                );
                               },
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(

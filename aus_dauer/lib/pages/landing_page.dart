@@ -326,10 +326,16 @@ class _LandingState extends State<LandingPage> {
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  Image(
-                                    image: NetworkImage(data.imagePath),
+                                  Container(
                                     width:
                                         MediaQuery.of(context).size.width / 2.5,
+                                    height:
+                                        MediaQuery.of(context).size.height / 8,
+                                    child: Image(
+                                      image: NetworkImage(data.imagePath),
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                   const SizedBox(height: 10.0),
                                   Container(
@@ -408,135 +414,94 @@ class _LandingState extends State<LandingPage> {
                 const SizedBox(height: 15),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: products.map((data) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ProductDetail(
-                                  productId: '4gUCNhdHELl1lWcA8usm'),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(
+                      children: products.map((data) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProductDetail(
+                                    productId: '4gUCNhdHELl1lWcA8usm'),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.grey.withOpacity(0.2)),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
-                          );
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.grey.withOpacity(0.2)),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Padding(
+                            child: Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: Row(
+                              child: Column(
                                 children: [
                                   Container(
-                                    width: 180,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "My life as a Disabled Pastry Baker",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16.0,
-                                          ),
-                                        ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          "Anna Marshall is a resilient and determined woman who moved to Indonesia from India...",
-                                          maxLines: 3,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          "Read Full Story",
-                                          style: TextStyle(
-                                            color: Color(0xFF072389),
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
                                     width:
-                                        MediaQuery.of(context).size.width / 3.1,
-                                    height: MediaQuery.of(context).size.height /
-                                        5.5,
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    height:
+                                        MediaQuery.of(context).size.height / 8,
                                     child: Image(
                                       image: NetworkImage(data.imagePath),
-                                      fit: BoxFit.cover,
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10.0),
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            Text(
+                                              data.sellerName,
+                                              textAlign: TextAlign.start,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          "\$${data.price}",
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18.0,
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   )
                                 ],
-                              )
-                              // child: Column(
-                              //   children: [
-                              //     Image(
-                              //       image: NetworkImage(data.imagePath),
-                              //       width:
-                              //           MediaQuery.of(context).size.width / 2.5,
-                              //     ),
-                              //     const SizedBox(height: 10.0),
-                              //     Container(
-                              //       margin: const EdgeInsets.symmetric(
-                              //           vertical: 10.0),
-                              //       width:
-                              //           MediaQuery.of(context).size.width / 2.5,
-                              //       child: Row(
-                              //         mainAxisAlignment:
-                              //             MainAxisAlignment.spaceBetween,
-                              //         children: [
-                              //           Column(
-                              //             crossAxisAlignment:
-                              //                 CrossAxisAlignment.start,
-                              //             children: [
-                              //               Text(
-                              //                 data.name,
-                              //                 textAlign: TextAlign.start,
-                              //                 style: const TextStyle(
-                              //                   color: Colors.black,
-                              //                   fontWeight: FontWeight.w700,
-                              //                   fontSize: 18.0,
-                              //                 ),
-                              //               ),
-                              //               Text(
-                              //                 data.sellerName,
-                              //                 textAlign: TextAlign.start,
-                              //                 style: const TextStyle(
-                              //                   color: Colors.black,
-                              //                   fontWeight: FontWeight.w400,
-                              //                   fontSize: 14.0,
-                              //                 ),
-                              //               )
-                              //             ],
-                              //           ),
-                              //           Text(
-                              //             "\$${data.price}",
-                              //             style: const TextStyle(
-                              //               color: Colors.black,
-                              //               fontWeight: FontWeight.w700,
-                              //               fontSize: 18.0,
-                              //             ),
-                              //           )
-                              //         ],
-                              //       ),
-                              //     )
-                              //   ],
-                              // ),
                               ),
-                        ),
-                      );
-                    }).toList(),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ],

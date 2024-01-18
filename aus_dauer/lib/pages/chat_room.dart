@@ -65,18 +65,45 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(""),
-          leading: Builder(
-            builder: (context) => IconButton(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+          leadingWidth: MediaQuery.of(context).size.width / 1.5,
+          leading: Row(children: [
+            SizedBox(width: 15),
+            IconButton(
               onPressed: () {
-                Scaffold.of(context).openDrawer(); // Open the drawer
+                Navigator.pop(context);
               },
-              icon: const Icon(
-                Icons.menu,
-                size: 30,
+              icon: Image.asset(
+                'assets/icons/arrow_back.png',
+                width: MediaQuery.of(context).size.width / 11,
               ),
             ),
-          ),
+            SizedBox(width: 20),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              width: MediaQuery.of(context).size.width / 10,
+              height: MediaQuery.of(context).size.width / 10,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
+                child: Image.asset(
+                  'assets/images/discover_blue.png',
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(width: 15),
+            Text(
+              'Rita Arnold',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+                fontSize: 16.0,
+              ),
+            ),
+          ]),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(1.0), // Adjust the height as needed
             child: Container(
