@@ -18,27 +18,19 @@ class FreelancePage extends StatefulWidget {
   State<FreelancePage> createState() => _FreelancePageState();
 }
 
-class Product {
-  final String name;
+class Freelance {
+  final String job;
   final String description;
-  final int numberOfReviews;
   final double price;
-  final double rating;
   final String sellerId;
-  final int numberOfItemsSold;
-  final int stock;
   final String imagePath;
   String sellerName;
 
-  Product({
-    required this.name,
+  Freelance({
+    required this.job,
     required this.description,
-    required this.numberOfReviews,
     required this.price,
-    required this.rating,
     required this.sellerId,
-    required this.numberOfItemsSold,
-    required this.stock,
     required this.imagePath,
     required this.sellerName,
   });
@@ -48,13 +40,13 @@ class _FreelancePageState extends State<FreelancePage> {
   // ... other methods and variables
   List<Map<String, dynamic>> searched = [];
 
-  final CollectionReference productsCollection =
-      FirebaseFirestore.instance.collection('products');
+  final CollectionReference freelanceCollection =
+      FirebaseFirestore.instance.collection('freelance');
 
   final CollectionReference sellersCollection =
       FirebaseFirestore.instance.collection('seller');
 
-  List<Product> products = [];
+  List<Freelance> freelance = [];
 
   @override
   void initState() {
@@ -64,15 +56,16 @@ class _FreelancePageState extends State<FreelancePage> {
 
   Future<void> fetchData() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> productsSnapshot =
-          await productsCollection.get() as QuerySnapshot<Map<String, dynamic>>;
+      QuerySnapshot<Map<String, dynamic>> freelanceSnapshot =
+          await freelanceCollection.get()
+              as QuerySnapshot<Map<String, dynamic>>;
 
-      List<Product> productList = [];
+      List<Freelance> freelanceList = [];
 
-      for (QueryDocumentSnapshot<Map<String, dynamic>> productDoc
-          in productsSnapshot.docs) {
-        Map<String, dynamic> productData = productDoc.data();
-        String sellerId = productData['sellerID'];
+      for (QueryDocumentSnapshot<Map<String, dynamic>> freelanceDoc
+          in freelanceSnapshot.docs) {
+        Map<String, dynamic> freelanceData = freelanceDoc.data();
+        String sellerId = freelanceData['sellerID'];
 
         // Fetch additional seller information
         DocumentSnapshot<Map<String, dynamic>> sellerDoc =
@@ -81,29 +74,25 @@ class _FreelancePageState extends State<FreelancePage> {
         Map<String, dynamic> sellerData = sellerDoc.data() ?? {};
 
         // Load image URL from Firebase Storage
-        String imageUrl = await getImageUrl(productData['image']);
+        String imageUrl = await getImageUrl(freelanceData['image']);
 
-        Product product = Product(
-          name: productData['name'],
-          description: productData['description'],
-          numberOfReviews: productData['reviews'],
-          price: productData['price'].toDouble(),
-          rating: productData['rating'].toDouble(),
+        Freelance freelance = Freelance(
+          job: freelanceData['job'],
+          description: freelanceData['description'],
+          price: freelanceData['price'].toDouble(),
           sellerId: sellerId,
-          numberOfItemsSold: productData['sold'],
-          stock: productData['stock'],
           imagePath: imageUrl,
           sellerName: sellerData['name'] ?? 'Unknown Seller',
         );
 
-        productList.add(product);
+        freelanceList.add(freelance);
       }
 
       setState(() {
-        products = productList;
+        freelance = freelanceList;
       });
     } catch (e) {
-      // Handle error
+      // print('ERROR: $e');
     }
   }
 
@@ -112,16 +101,16 @@ class _FreelancePageState extends State<FreelancePage> {
     return await ref.getDownloadURL();
   }
 
-  void _runFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
-    if (enteredKeyword.isEmpty) {
-      //results = allsearched;
-    } else {
-      // results = allsearched.where((user) => user["name"]
-      //     .toLowerCase()
-      //     .contains(enteredKeyword.toLowerCase())).toList();
-    }
-  }
+  // void _runFilter(String enteredKeyword) {
+  //   List<Map<String, dynamic>> results = [];
+  //   if (enteredKeyword.isEmpty) {
+  //     //results = allsearched;
+  //   } else {
+  //     // results = allsearched.where((user) => user["name"]
+  //     //     .toLowerCase()
+  //     //     .contains(enteredKeyword.toLowerCase())).toList();
+  //   }
+  // }
 
   // setState((){
   //   allsearched = results;
@@ -367,7 +356,7 @@ class _FreelancePageState extends State<FreelancePage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
-                      children: products.map((data) {
+                      children: freelance.map((data) {
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -410,29 +399,33 @@ class _FreelancePageState extends State<FreelancePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              data.name,
-                                              textAlign: TextAlign.start,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 18.0,
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                data.job,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 18.0,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                               ),
-                                            ),
-                                            Text(
-                                              data.sellerName,
-                                              textAlign: TextAlign.start,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14.0,
+                                              Text(
+                                                data.sellerName,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14.0,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                               ),
-                                            )
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                         Text(
                                           "\$${data.price}",
@@ -480,7 +473,7 @@ class _FreelancePageState extends State<FreelancePage> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Row(
-                      children: products.map((data) {
+                      children: freelance.map((data) {
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -523,29 +516,33 @@ class _FreelancePageState extends State<FreelancePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              data.name,
-                                              textAlign: TextAlign.start,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 18.0,
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                data.job,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 18.0,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                               ),
-                                            ),
-                                            Text(
-                                              data.sellerName,
-                                              textAlign: TextAlign.start,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14.0,
+                                              Text(
+                                                data.sellerName,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14.0,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
                                               ),
-                                            )
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                         Text(
                                           "\$${data.price}",
