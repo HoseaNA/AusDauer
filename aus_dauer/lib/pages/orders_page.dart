@@ -390,7 +390,14 @@ class NavigationDrawer extends StatelessWidget {
                       width: MediaQuery.of(context).size.width / 11,
                     ),
                     title: const Text("Discover"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MarketplacePage(),
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     leading: Image.asset(
